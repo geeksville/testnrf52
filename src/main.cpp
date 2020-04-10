@@ -1,5 +1,4 @@
 #include <Arduino.h>
-//#include <BLEPeripheral.h>
 
 /*
 per
@@ -35,7 +34,11 @@ https://www.segger.com/downloads/jlink#J-LinkSoftwareAndDocumentationPack
 install nrf tools from here:
 https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Command-Line-Tools/Download#infotabs
 
+examples of turning off the loop call to save power:
+https://learn.adafruit.com/bluefruit-nrf52-feather-learning-guide/advertising-beacon
 
+example of a more complex BLE service:
+https://learn.adafruit.com/bluefruit-nrf52-feather-learning-guide/custom-hrm
 */
 
 // See g_ADigitalPinMap to see how arduino maps to the real gpio#s - and all in
@@ -44,43 +47,22 @@ https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Command-Line
 #define LED2 13
 
 /*
-BLEPeripheral ledPeripheral = BLEPeripheral();
-
-BLEService ledService = BLEService("19b10000e8f2537e4f6cd104768a1214");
-BLECharCharacteristic ledCharacteristic = BLECharCharacteristic(
-    "19b10001e8f2537e4f6cd104768a1214", BLERead | BLEWrite);
+good led ble demo:
+https://github.com/adafruit/Adafruit_nRF52_Arduino/blob/master/libraries/Bluefruit52Lib/examples/Peripheral/nrf_blinky/nrf_blinky.ino
 */
 
 void setup() {
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
 
-  /*
-    ledPeripheral.setAdvertisedServiceUuid(ledService.uuid());
-    ledPeripheral.addAttribute(ledService);
-    ledPeripheral.addAttribute(ledCharacteristic);
-    ledPeripheral.setLocalName("Nordic NRF52 DK");
-    ledPeripheral.begin(); */
+  Serial.begin(115200);
+  Serial.println("Hello world");
 }
 
 void loop() {
   digitalWrite(LED1, HIGH);
-  delay(1000);
+  delay(200);
   digitalWrite(LED1, LOW);
-  delay(1000);
-
-  /*
-    BLECentral central = ledPeripheral.central();
-
-    if (central) {
-      while (central.connected()) {
-        if (ledCharacteristic.written()) {
-          if (ledCharacteristic.value()) {
-            digitalWrite(LED_BUILTIN, HIGH);
-          } else {
-            digitalWrite(LED_BUILTIN, LOW);
-          }
-        }
-      }
-    } */
+  delay(200);
+  Serial.println("X");
 }
